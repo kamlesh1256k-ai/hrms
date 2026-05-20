@@ -1,0 +1,6 @@
+# Install on the server (same machine as PHP), e.g.:
+#   python -m pip install -r scripts/requirements-deepface.txt
+#
+# First run may download model weights (slow). TensorFlow is pulled in by deepface.
+
+deepface>=0.0.90

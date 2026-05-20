@@ -1,0 +1,56 @@
+{{ Form::model($timeSheet, ['route' => ['timesheet.update', $timeSheet->id], 'method' => 'PUT', 'class' => 'needs-validation', 'novalidate']) }}
+<div class="modal-body">
+    <div class="row">
+        @if (\Auth::user()->type != 'employee')
+            <div class="form-group col-md-12">
+                {{ Form::label('employee_id', __('Employee'), ['class' => 'col-form-label']) }}<x-required></x-required>
+                {!! Form::select('employee_id', $employees, null, ['class' => 'form-control', 'required' => 'required']) !!}
+            </div>
+        @endif
+        <div class="form-group col-md-6">
+            {{ Form::label('client_name', __('Client Name'), ['class' => 'col-form-label']) }}
+            {{ Form::text('client_name', null, ['class' => 'form-control', 'placeholder' => __('Client')]) }}
+        </div>
+        <div class="form-group col-md-6">
+            {{ Form::label('task', __('Task / Work Done'), ['class' => 'col-form-label']) }}<x-required></x-required>
+            {{ Form::text('task', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => __('Task')]) }}
+        </div>
+        <div class="form-group col-md-6">
+            {{ Form::label('category', __('Category'), ['class' => 'col-form-label']) }}
+            {{ Form::select('category', ['' => __('Select'), 'Taxation' => 'Taxation', 'Audit' => 'Audit', 'Compliance' => 'Compliance', 'Admin' => 'Admin', 'Other' => 'Other'], null, ['class' => 'form-control']) }}
+        </div>
+        <div class="form-group col-md-6">
+            {{ Form::label('date', __('Date'), ['class' => 'col-form-label']) }}<x-required></x-required>
+            {{ Form::date('date', null, ['class' => 'form-control', 'required' => 'required']) }}
+        </div>
+        <div class="form-group col-md-3">
+            {{ Form::label('start_time', __('Start Time'), ['class' => 'col-form-label']) }}
+            {{ Form::time('start_time', null, ['class' => 'form-control']) }}
+        </div>
+        <div class="form-group col-md-3">
+            {{ Form::label('end_time', __('End Time'), ['class' => 'col-form-label']) }}
+            {{ Form::time('end_time', null, ['class' => 'form-control']) }}
+        </div>
+        <div class="form-group col-md-3">
+            {{ Form::label('hours', __('Hours'), ['class' => 'col-form-label']) }}<x-required></x-required>
+            {{ Form::number('hours', null, ['class' => 'form-control', 'required' => 'required', 'step' => '0.01']) }}
+        </div>
+        <div class="form-group col-md-3">
+            {{ Form::label('billable', __('Billable'), ['class' => 'col-form-label']) }}
+            {{ Form::select('billable', ['billable' => __('Billable'), 'non-billable' => __('Non-Billable')], null, ['class' => 'form-control']) }}
+        </div>
+        <div class="form-group col-md-6">
+            {{ Form::label('status', __('Status'), ['class' => 'col-form-label']) }}
+            {{ Form::select('status', ['pending' => __('Pending'), 'in_progress' => __('In Progress'), 'completed' => __('Completed')], null, ['class' => 'form-control']) }}
+        </div>
+        <div class="form-group col-md-6">
+            {{ Form::label('remark', __('Remark'), ['class' => 'col-form-label']) }}
+            {{ Form::text('remark', null, ['class' => 'form-control', 'placeholder' => __('Enter remark')]) }}
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ __('Cancel') }}</button>
+    <input type="submit" value="{{ __('Update') }}" class="btn btn-primary">
+</div>
+{{ Form::close() }}

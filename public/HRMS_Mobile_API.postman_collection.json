@@ -1,0 +1,396 @@
+{
+	"info": {
+		"_postman_id": "hrms-mobile-api-collection",
+		"name": "HRMS Mobile App API",
+		"description": "Complete API collection for HRMS Mobile Attendance App.\n\n**Setup:**\n1. Set `base_url` variable to your server (e.g. https://miraix.in/api/mobile)\n2. Set `app_key` variable to your Mobile App API Key\n3. Call POST /login first — token will auto-save to `auth_token` variable\n4. All protected endpoints will use the saved token automatically",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{auth_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://miraix.in/api/mobile",
+			"type": "string"
+		},
+		{
+			"key": "app_key",
+			"value": "YOUR_APP_KEY_HERE",
+			"type": "string"
+		},
+		{
+			"key": "auth_token",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "1. Authentication",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.success && jsonData.data && jsonData.data.token) {",
+									"    pm.collectionVariables.set('auth_token', jsonData.data.token);",
+									"    console.log('Token saved: ' + jsonData.data.token.substring(0, 20) + '...');",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "X-App-Key", "value": "{{app_key}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"employee@company.com\",\n    \"password\": \"password123\",\n    \"device_name\": \"Postman Test\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/login",
+							"host": ["{{base_url}}"],
+							"path": ["login"]
+						},
+						"description": "Login and get bearer token. Token is auto-saved to collection variable `auth_token`."
+					}
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "X-App-Key", "value": "{{app_key}}" }
+						],
+						"url": {
+							"raw": "{{base_url}}/logout",
+							"host": ["{{base_url}}"],
+							"path": ["logout"]
+						},
+						"description": "Revoke current token and logout."
+					}
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "X-App-Key", "value": "{{app_key}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"employee@company.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/forgot-password",
+							"host": ["{{base_url}}"],
+							"path": ["forgot-password"]
+						},
+						"description": "Send password reset email."
+					}
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "X-App-Key", "value": "{{app_key}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"current_password\": \"oldpassword\",\n    \"new_password\": \"newpassword123\",\n    \"new_password_confirmation\": \"newpassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/change-password",
+							"host": ["{{base_url}}"],
+							"path": ["change-password"]
+						},
+						"description": "Change password for logged-in user."
+					}
+				}
+			]
+		},
+		{
+			"name": "2. Face Verification",
+			"item": [
+				{
+					"name": "Verify Face",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "X-App-Key", "value": "{{app_key}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"photo\": \"data:image/jpeg;base64,/9j/4AAQ...\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/verify-face",
+							"host": ["{{base_url}}"],
+							"path": ["verify-face"]
+						},
+						"description": "Verify employee face after login. Send selfie as base64 encoded JPEG/PNG."
+					}
+				}
+			]
+		},
+		{
+			"name": "3. Dashboard",
+			"item": [
+				{
+					"name": "Get Dashboard",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "X-App-Key", "value": "{{app_key}}" }
+						],
+						"url": {
+							"raw": "{{base_url}}/dashboard",
+							"host": ["{{base_url}}"],
+							"path": ["dashboard"]
+						},
+						"description": "Get today's attendance status, monthly summary, and company timings."
+					}
+				}
+			]
+		},
+		{
+			"name": "4. Clock In / Clock Out",
+			"item": [
+				{
+					"name": "Clock In",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "X-App-Key", "value": "{{app_key}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"latitude\": 28.6139,\n    \"longitude\": 77.2090,\n    \"address\": \"Connaught Place, New Delhi\",\n    \"photo\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/clock-in",
+							"host": ["{{base_url}}"],
+							"path": ["clock-in"]
+						},
+						"description": "Clock in with live location and optional selfie photo."
+					}
+				},
+				{
+					"name": "Clock Out",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "X-App-Key", "value": "{{app_key}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"latitude\": 28.6139,\n    \"longitude\": 77.2090,\n    \"address\": \"Connaught Place, New Delhi\",\n    \"photo\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/clock-out",
+							"host": ["{{base_url}}"],
+							"path": ["clock-out"]
+						},
+						"description": "Clock out. Same parameters as clock-in."
+					}
+				}
+			]
+		},
+		{
+			"name": "5. Attendance History",
+			"item": [
+				{
+					"name": "Get Attendance History",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "X-App-Key", "value": "{{app_key}}" }
+						],
+						"url": {
+							"raw": "{{base_url}}/attendance-history?month=2026-04",
+							"host": ["{{base_url}}"],
+							"path": ["attendance-history"],
+							"query": [
+								{ "key": "month", "value": "2026-04", "description": "YYYY-MM format (defaults to current month)" }
+							]
+						},
+						"description": "Get attendance history for a specific month."
+					}
+				}
+			]
+		},
+		{
+			"name": "6. Leave Management",
+			"item": [
+				{
+					"name": "Get Leave Types",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "X-App-Key", "value": "{{app_key}}" }
+						],
+						"url": {
+							"raw": "{{base_url}}/leave-types",
+							"host": ["{{base_url}}"],
+							"path": ["leave-types"]
+						},
+						"description": "Get available leave types (Sick, Casual, etc.)"
+					}
+				},
+				{
+					"name": "Get Leaves",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "X-App-Key", "value": "{{app_key}}" }
+						],
+						"url": {
+							"raw": "{{base_url}}/leaves?month=2026-04",
+							"host": ["{{base_url}}"],
+							"path": ["leaves"],
+							"query": [
+								{ "key": "month", "value": "2026-04", "description": "YYYY-MM format" }
+							]
+						},
+						"description": "Get employee's leave history."
+					}
+				},
+				{
+					"name": "Apply Leave",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "X-App-Key", "value": "{{app_key}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"leave_type_id\": 1,\n    \"start_date\": \"2026-04-15\",\n    \"end_date\": \"2026-04-15\",\n    \"day_type\": \"full_day\",\n    \"leave_reason\": \"Personal work\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/leave/apply",
+							"host": ["{{base_url}}"],
+							"path": ["leave", "apply"]
+						},
+						"description": "Apply for leave.\n\nday_type: full_day | first_half | second_half"
+					}
+				}
+			]
+		},
+		{
+			"name": "7. Swipe Request",
+			"item": [
+				{
+					"name": "Submit Swipe Request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "X-App-Key", "value": "{{app_key}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"date\": \"2026-04-10\",\n    \"requested_status\": \"Present\",\n    \"requested_clock_in\": \"09:00\",\n    \"requested_clock_out\": \"18:00\",\n    \"reason\": \"Forgot to clock in\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/swipe-request",
+							"host": ["{{base_url}}"],
+							"path": ["swipe-request"]
+						},
+						"description": "Request attendance modification.\n\nrequested_status: Present | Half Day | Leave | Absent"
+					}
+				},
+				{
+					"name": "Get Swipe Requests",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "X-App-Key", "value": "{{app_key}}" }
+						],
+						"url": {
+							"raw": "{{base_url}}/swipe-requests",
+							"host": ["{{base_url}}"],
+							"path": ["swipe-requests"]
+						},
+						"description": "Get history of swipe modification requests."
+					}
+				}
+			]
+		},
+		{
+			"name": "8. Profile",
+			"item": [
+				{
+					"name": "Get Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Accept", "value": "application/json" },
+							{ "key": "X-App-Key", "value": "{{app_key}}" }
+						],
+						"url": {
+							"raw": "{{base_url}}/profile",
+							"host": ["{{base_url}}"],
+							"path": ["profile"]
+						},
+						"description": "Get employee profile, department, designation, shift, and reporting manager."
+					}
+				}
+			]
+		}
+	]
+}

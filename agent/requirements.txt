@@ -1,0 +1,9 @@
+pyautogui==0.9.54
+pillow==10.4.0
+psutil==6.0.0
+pynput==1.7.7
+pywin32==306; sys_platform == "win32"
+requests==2.32.3
+pystray==0.19.5
+cryptography==43.0.1
+uiautomation==2.0.20; sys_platform == "win32"

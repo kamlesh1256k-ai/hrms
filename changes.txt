@@ -1,0 +1,54 @@
+1. http://localhost/hrms/
+
+is page ko redesign karna hai hrms ke ui/ux ke accoridng 
+
+2. http://localhost/hrms/login
+
+isaka header ko hata de aur iskaa ui/ux best bana 
+reference ke liye https://jewelio.tech/admin/login
+
+3. http://localhost/hrms/dashboard
+
+isko b residn karo header and menu aur wunated padding hatao
+
+4.dashboard 
+ispe agar meine login kar liyaa to login dikhaao dikhaau wapas 
+se login button mat dikhaao aur jab logout kar diyaa to uske
+ baad login button show karo
+
+5. logout mein picuture capture kaa option den ahai 
+
+6. login and logout time show karo 
+
+7. isksa koi aur logo update karo logo ko hightligh karo abhi waala show hi nahi hota hai 
+
+8.  http://localhost/hrms/attendanceemployee
+ispe login and lput kaa both kaa pic show karo aur dono kaa verify kaa status show karo 
+
+9. ispe swipe request har entry pe nahi show karni hai usko upar hi sqipe daalne kaa option dena hai 
+10. issi page pe total swipe request dikhaao
+
+11. swipe request ki history dikhaao 
+aur ke
+12. screenshot capture on realtime not screen recording
+
+13. Address : Present & Permanent , if same then click and it gets copied 
+
+address waale mein country and country wise state and statue wise city and pincode dane kaa option daalo
+
+14. Environment Auto-Detection (Local vs Cloud)
+- .env.local → localhost/XAMPP pe automatically load hota hai
+- .env.cloud → cloud/miraix.in pe automatically load hota hai
+- bootstrap/app.php mein auto-detect logic hai, koi manual switch nahi karna padta
+- seedha files upload karo, dono jagah apne aap sahi config uthata hai
+
+15. Sanctum Stateful Domains
+- .env.cloud mein miraix.in,www.miraix.in add kiya
+- .env.local mein localhost domains explicitly set kiye
+- API authentication dono environments mein kaam karega
+
+16. Queue Config Fix
+- config/queue.php mein beanstalkd host ko env() se dynamic banaya
+- hardcoded 'localhost' hata diya
+
+iski 

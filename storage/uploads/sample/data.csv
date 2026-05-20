@@ -1,0 +1,28 @@
+IP,Date,Time,Accepted cookies,Device type,Browser language,Browser name,OS Name,Country,Region,RegionName,City,Zipcode,Lat,Lon
+2401:4900:88aa:4fa0:f5a0:fee9:c24a:58de,2026-02-05,11:09:06 UTC,necessary,desktop,en,Chrome,Windows,India,RJ,Rajasthan,Jaipur,302004,26.9136,75.7858
+49.0.83.156,2026-02-06,05:34:28 UTC,necessary,desktop,en,Chrome,Windows,Thailand,10,Bangkok,Bangkok,10150,13.6984,100.4638
+2402:3a80:4282:ca6e:3d7a:ca8f:5f91:3f92,2026-02-06,13:12:33 UTC,necessary,desktop,en,Edge,Windows,India,MH,Maharashtra,Mumbai,400017,19.0748,72.8856
+2401:4900:88aa:5ddb:fc2a:ee87:8e0e:7ed3,2026-02-07,09:14:51 UTC,necessary,desktop,en,Chrome,Windows,India,RJ,Rajasthan,Jaipur,302004,26.9136,75.7858
+::1,2026-05-09,06:14:11 UTC,necessary,desktop,en,Chrome,Windows,,,,,,,
+2401:4900:c4bc:d831:3584:f754:e436:e84a,2026-05-11,06:48:42 UTC,necessary,mobile,en,Google Search,iOS,India,BR,Bihar,Patna,800001,25.5819,85.0818
+2401:4900:c4bc:d831:a5ba:baae:b4c7:9fb0,2026-05-11,06:53:46 UTC,necessary,desktop,en,Chrome,Windows,India,BR,Bihar,Patna,800001,25.5819,85.0818
+49.0.83.156,2026-05-11,07:08:59 UTC,necessary,mobile,en,Chrome,Android,Thailand,10,Bangkok,Bangkok,10120,13.7101,100.4543
+2401:4900:c4bc:d831:4df4:e282:299f:c0f6,2026-05-11,07:11:08 UTC,necessary,desktop,en,Chrome,Windows,India,BR,Bihar,Patna,800001,25.5819,85.0818
+1.39.234.7,2026-05-11,07:13:08 UTC,necessary,mobile,en,Chrome,Android,India,RJ,Rajasthan,Bikaner,334001,28.0175,73.3193
+2402:3a80:42b0:5232:448:3893:6920:e29a,2026-05-11,07:19:32 UTC,necessary,desktop,en,Chrome,Windows,India,MH,Maharashtra,Mumbai,400104,19.0748,72.8856
+1.46.85.39,2026-05-12,15:12:12 UTC,necessary,desktop,en,Chrome,Windows,Thailand,10,Bangkok,Bangkok,10110,13.7101,100.4543
+2401:4900:7a97:8158:c485:688f:eb44:2f23,2026-05-12,16:26:22 UTC,necessary,desktop,en,Chrome,Windows,India,RJ,Rajasthan,Jodhpur,342001,26.2692,73.009
+2405:201:35:1119:edee:abff:1474:e174,2026-05-14,05:02:12 UTC,necessary,desktop,en,Chrome,Windows,India,MH,Maharashtra,Mumbai,400017,19.0748,72.8856
+2405:201:35:1119:edee:abff:1474:e174,2026-05-14,05:03:20 UTC,necessary,desktop,en,Chrome,Windows,India,MH,Maharashtra,Mumbai,400017,19.0748,72.8856
+2409:40d4:3004:111a:79b9:c6fb:e9ef:37e1,2026-05-14,07:26:03 UTC,necessary,desktop,en,Chrome,Windows,India,RJ,Rajasthan,Jaipur,302012,26.9136,75.7858
+2409:40d4:10b7:6438:1105:d6f1:5ed4:be4c,2026-05-15,05:16:23 UTC,necessary,desktop,en,Chrome,Windows,India,RJ,Rajasthan,Jaipur,302021,26.9136,75.7858
+2409:40d4:10b7:6438:e996:afd3:4125:eec2,2026-05-15,06:20:24 UTC,necessary,desktop,en,Firefox,Windows,India,RJ,Rajasthan,Jaipur,302021,26.9136,75.7858
+2409:40d4:10b7:6438:e996:afd3:4125:eec2,2026-05-15,06:48:43 UTC,necessary,desktop,en,Chrome,Windows,India,RJ,Rajasthan,Jaipur,302021,26.9136,75.7858
+2409:40d4:10b7:6438:1105:d6f1:5ed4:be4c,2026-05-15,08:48:08 UTC,necessary,desktop,en,Chrome,Windows,India,RJ,Rajasthan,Jaipur,302021,26.9136,75.7858
+2409:40d4:111c:206e:7993:fbb0:69c4:d7df,2026-05-16,05:27:25 UTC,necessary,desktop,en,Chrome,Windows,India,RJ,Rajasthan,Jaipur,302039,26.9136,75.7858
+2401:4900:88b3:a936:bdaf:6942:f945:2a77,2026-05-18,10:52:11 UTC,necessary,desktop,en,Firefox,Windows,India,MH,Maharashtra,Mumbai,400104,19.0748,72.8856
+2401:4900:88b3:a936:8059:2e2c:4927:d033,2026-05-18,10:53:07 UTC,necessary,desktop,en,Firefox,Windows,India,MH,Maharashtra,Mumbai,400104,19.0748,72.8856
+2401:4900:88b3:a936:bdaf:6942:f945:2a77,2026-05-18,11:14:23 UTC,necessary,desktop,en,Firefox,Windows,India,MH,Maharashtra,Mumbai,400104,19.0748,72.8856
+127.0.0.1,2026-05-19,10:12:34 UTC,necessary,desktop,en,Chrome,Windows,,,,,,,
+127.0.0.1,2026-05-19,10:55:08 UTC,necessary,desktop,en,Chrome,Windows,,,,,,,
+127.0.0.1,2026-05-19,11:32:16 UTC,necessary,desktop,en,Chrome,Windows,,,,,,,

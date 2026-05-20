@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Miraix HR Activity Tracker</title>
+<style>
+    *{box-sizing:border-box;}
+    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;
+         background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 60%,#312e81 100%);
+         color:#e2e8f0;min-height:100vh;padding:18px;}
+    .wrap{max-width:760px;margin:0 auto;}
+
+    .hero{background:rgba(255,255,255,.05);backdrop-filter:blur(10px);
+          border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:18px 22px;
+          display:flex;align-items:center;gap:16px;margin-bottom:14px;}
+    .hero .logo{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#6366f1,#8b5cf6);
+                display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.05rem;
+                box-shadow:0 12px 28px -10px rgba(99,102,241,.55);}
+    .hero h1{margin:0;font-size:1.05rem;letter-spacing:-.3px;}
+    .hero p{margin:2px 0 0;font-size:.74rem;color:rgba(255,255,255,.65);}
+    .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.66rem;
+           font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-left:auto;}
+    .badge-on  {background:#10b981;color:#fff;}
+    .badge-off {background:#475569;color:#cbd5e1;}
+
+    .card{background:#fff;color:#1f2937;border-radius:14px;padding:18px;margin-bottom:14px;
+          box-shadow:0 18px 38px -22px rgba(0,0,0,.5);}
+    .card h3{margin:0 0 12px;font-size:.78rem;text-transform:uppercase;letter-spacing:.6px;color:#475569;
+             display:flex;align-items:center;gap:6px;}
+
+    label{display:block;font-size:.74rem;font-weight:600;color:#475569;margin-bottom:4px;}
+    input[type="text"],input[type="email"],input[type="password"],input[type="number"]{
+        width:100%;border:1.5px solid #e2e8f0;border-radius:9px;padding:10px 12px;font-size:.88rem;
+        font-family:inherit;background:#f8fafc;}
+    input:focus{outline:0;border-color:#6366f1;background:#fff;
+                box-shadow:0 0 0 3px rgba(99,102,241,.15);}
+    .help{font-size:.7rem;color:#94a3b8;margin-top:4px;}
+
+    .btn{display:inline-flex;align-items:center;gap:6px;
+         padding:10px 18px;border-radius:10px;border:0;cursor:pointer;
+         font-weight:600;font-size:.86rem;transition:.15s;}
+    .btn-grad{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;
+              box-shadow:0 10px 22px -10px rgba(99,102,241,.55);}
+    .btn-grad:hover{transform:translateY(-1px);}
+    .btn-stop{background:linear-gradient(135deg,#ef4444,#b91c1c);color:#fff;}
+    .btn-light{background:#f1f5f9;color:#1e293b;border:1px solid #e2e8f0;}
+    .btn:disabled{opacity:.55;cursor:not-allowed;transform:none;}
+
+    .status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;}
+    .status-cell{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px;}
+    .status-cell .lbl{font-size:.66rem;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;font-weight:700;}
+    .status-cell .val{font-size:.92rem;font-weight:700;color:#0f172a;margin-top:3px;word-break:break-word;}
+    .val.on  {color:#10b981;}
+    .val.off {color:#94a3b8;}
+    .val.warn{color:#f59e0b;}
+
+    .consent{background:#fef3c7;border:1px solid #fbbf24;border-left:5px solid #f59e0b;
+             color:#78350f;border-radius:10px;padding:14px 16px;margin-bottom:14px;font-size:.84rem;line-height:1.5;}
+    .consent strong{color:#92400e;}
+
+    .alert{padding:10px 14px;border-radius:8px;margin-bottom:10px;font-size:.82rem;}
+    .alert-error{background:#fef2f2;border:1px solid #fecaca;color:#991b1b;}
+    .alert-ok   {background:#dcfce7;border:1px solid #86efac;color:#166534;}
+
+    .log-strip{font-family:'SF Mono',Consolas,Menlo,monospace;font-size:.74rem;
+               background:#0f172a;color:#22c55e;padding:10px 12px;border-radius:8px;
+               max-height:120px;overflow-y:auto;}
+    .log-strip .err{color:#ef4444;}
+
+    .row{display:flex;gap:10px;flex-wrap:wrap;}
+    .row > *{flex:1;min-width:160px;}
+
+    .toggle-row{display:flex;align-items:center;justify-content:space-between;
+                padding:10px 0;border-bottom:1px dashed #e2e8f0;}
+    .toggle-row:last-child{border-bottom:0;}
+    .toggle-row .t-lbl{font-weight:600;font-size:.84rem;color:#1e293b;}
+    .toggle-row .t-help{font-size:.7rem;color:#94a3b8;margin-top:2px;}
+    .switch{position:relative;display:inline-block;width:44px;height:24px;}
+    .switch input{opacity:0;width:0;height:0;}
+    .slider{position:absolute;cursor:pointer;inset:0;background:#cbd5e1;border-radius:34px;transition:.2s;}
+    .slider:before{position:absolute;content:"";height:18px;width:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s;}
+    input:checked + .slider{background:linear-gradient(135deg,#6366f1,#8b5cf6);}
+    input:checked + .slider:before{transform:translateX(20px);}
+
+    .user-pill{background:linear-gradient(135deg,#dbeafe,#bfdbfe);
+               color:#1e40af;padding:6px 14px;border-radius:20px;font-size:.82rem;
+               font-weight:600;display:inline-flex;align-items:center;gap:6px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+    <div class="hero">
+        <div class="logo">AT</div>
+        <div>
+            <h1>Miraix HR Activity Tracker</h1>
+            <p>Modern employee monitoring & productivity analytics</p>
+        </div>
+        <span class="badge badge-off" id="topBadge">Stopped</span>
+    </div>
+
+    <!-- NOT LOGGED IN PANEL -->
+    <div id="loginPanel" style="display:none;">
+        <div class="card">
+            <h3><i>🔐</i> Sign in to your Miraix HR account</h3>
+            <p style="font-size:.84rem;color:#475569;margin:0 0 14px;">
+                Use your Miraix HR employee email and password. The tracker will run in the background and report your activity to your employer's Miraix HR dashboard.
+            </p>
+
+            <div id="loginAlert"></div>
+
+            <label>HRMS Server URL</label>
+            <input type="text" id="apiUrl" placeholder="https://jemini.co.in/api">
+            <div class="help">Get this from your HR / IT administrator.</div>
+
+            <div class="row" style="margin-top:10px;">
+                <div>
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" placeholder="employee@company.com" autocomplete="username">
+                </div>
+                <div>
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
+                </div>
+            </div>
+
+            <div style="margin-top:14px;">
+                <button class="btn btn-grad" id="btnLogin" onclick="doLogin()" style="width:100%;">
+                    <span id="btnLoginText">🔐 Sign in & Start Tracking</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="consent">
+            <strong>📋 What gets tracked:</strong>
+            Active app + window title, idle time, keyboard/mouse counts (counts only — not actual keys), and full-screen screenshots every 5 minutes. Data goes only to your employer's HRMS server.
+            <br><br>
+            <strong>By signing in you consent to this monitoring.</strong>
+            You can stop tracking anytime via the Stop button or by quitting from the system tray.
+        </div>
+    </div>
+
+    <!-- LOGGED IN PANEL — kiosk mode (no stop/logout/settings) -->
+    <div id="trackingPanel" style="display:none;">
+        <div class="card">
+            <h3><i>👤</i> Logged in</h3>
+            <div class="user-pill"><i>✓</i> <span id="vUserName">—</span> · <span id="vUserEmail">—</span></div>
+            <div class="help" style="margin-top:10px;">
+                <i>🔒</i> Activity tracking is mandatory while you are logged in to this device.
+                Contact your HR administrator if you need to change account.
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><i>📊</i> Tracking status</h3>
+            <div class="status-grid">
+                <div class="status-cell"><div class="lbl">Status</div><div class="val on" id="vStatus">Tracking</div></div>
+                <div class="status-cell"><div class="lbl">API</div><div class="val" id="vApi">—</div></div>
+                <div class="status-cell"><div class="lbl">Device ID</div><div class="val" id="vDeviceId">—</div></div>
+                <div class="status-cell"><div class="lbl">Last sync</div><div class="val" id="vLastSync">—</div></div>
+                <div class="status-cell"><div class="lbl">Pending queue</div><div class="val" id="vQueue">0</div></div>
+                <div class="status-cell"><div class="lbl">Active app</div><div class="val" id="vActiveApp">—</div></div>
+            </div>
+        </div>
+
+        <!-- Hidden control buttons retained for legacy IPC, but never shown -->
+        <button id="btnStart" style="display:none;"></button>
+        <button id="btnStop"  style="display:none;"></button>
+
+        <div class="card">
+            <h3><i>📜</i> Recent log</h3>
+            <div class="log-strip" id="logStrip">Idle — no events yet.</div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+function logLine(text, isErr) {
+    const el = document.getElementById('logStrip');
+    if (!el) return;
+    const stamp = new Date().toLocaleTimeString();
+    const line  = `[${stamp}] ${text}`;
+    const div   = document.createElement('div');
+    if (isErr) div.className = 'err';
+    div.textContent = line;
+    if (el.firstChild && el.firstChild.textContent === 'Idle — no events yet.') el.innerHTML = '';
+    el.insertBefore(div, el.firstChild);
+    while (el.childElementCount > 30) el.removeChild(el.lastChild);
+}
+
+function fmt(d) { if (!d) return '—'; const x = new Date(d); return x.toLocaleString(); }
+
+function paintStatus(s) {
+    if (!document.getElementById('vStatus')) return;
+    document.getElementById('vStatus').textContent     = s.running ? 'Tracking' : 'Stopped';
+    document.getElementById('vStatus').className       = 'val ' + (s.running ? 'on' : 'off');
+    document.getElementById('vApi').textContent        = s.apiReachable ? 'Connected' : 'Unreachable';
+    document.getElementById('vApi').className          = 'val ' + (s.apiReachable ? 'on' : 'warn');
+    document.getElementById('vDeviceId').textContent   = s.deviceId || '—';
+    document.getElementById('vLastSync').textContent   = fmt(s.lastSyncAt);
+    document.getElementById('vQueue').textContent      = s.pendingQueue ?? 0;
+    document.getElementById('vActiveApp').textContent  = s.activeApp || '—';
+
+    // Buttons are hidden in kiosk mode but kept in DOM for IPC compatibility.
+    const bs = document.getElementById('btnStart'); if (bs) bs.disabled = s.running;
+    const bx = document.getElementById('btnStop');  if (bx) bx.disabled = !s.running;
+
+    const badge = document.getElementById('topBadge');
+    badge.textContent = s.running ? 'Tracking' : 'Stopped';
+    badge.className   = 'badge ' + (s.running ? 'badge-on' : 'badge-off');
+
+    if (s.lastEvent) logLine(s.lastEvent, s.lastWasError);
+}
+
+function showAlert(msg, isErr) {
+    const el = document.getElementById('loginAlert');
+    el.innerHTML = `<div class="alert ${isErr ? 'alert-error' : 'alert-ok'}">${msg}</div>`;
+}
+
+async function bootstrap() {
+    const cfg = await window.hrms.getConfig();
+    if (cfg.token && cfg.userEmail) {
+        // Already logged in → show tracking panel (kiosk: no logout option)
+        document.getElementById('loginPanel').style.display    = 'none';
+        document.getElementById('trackingPanel').style.display = 'block';
+        document.getElementById('vUserName').textContent  = cfg.userName  || '—';
+        document.getElementById('vUserEmail').textContent = cfg.userEmail || '—';
+        paintStatus(await window.hrms.getStatus());
+    } else {
+        document.getElementById('loginPanel').style.display    = 'block';
+        document.getElementById('trackingPanel').style.display = 'none';
+        document.getElementById('apiUrl').value = cfg.apiUrl || '';
+    }
+}
+
+async function doLogin() {
+    const apiUrl   = document.getElementById('apiUrl').value.trim();
+    const email    = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    if (!apiUrl || !email || !password) { showAlert('Please fill all fields.', true); return; }
+
+    const btn = document.getElementById('btnLogin');
+    btn.disabled = true;
+    document.getElementById('btnLoginText').textContent = '⏳ Signing in…';
+
+    const res = await window.hrms.login({ apiUrl, email, password });
+    btn.disabled = false;
+    document.getElementById('btnLoginText').textContent = '🔐 Sign in & Start Tracking';
+
+    if (!res.ok) {
+        showAlert(res.message || 'Login failed', true);
+        return;
+    }
+
+    showAlert('Signed in! Setting up device…', false);
+
+    // Auto-flow: mark consent (sign-in implies consent), register device, start tracking
+    await window.hrms.saveConfig({ consentAccepted: true });
+    await window.hrms.registerDevice();
+    await window.hrms.startTracking();
+
+    await bootstrap();
+}
+
+async function doLogout() {
+    if (!confirm('Sign out and stop tracking?')) return;
+    await window.hrms.logout();
+    await bootstrap();
+}
+
+async function startTracking() {
+    const s = await window.hrms.startTracking();
+    paintStatus(s);
+}
+
+async function stopTracking() {
+    const s = await window.hrms.stopTracking();
+    paintStatus(s);
+}
+
+async function toggleAutoStart() {
+    const v = document.getElementById('tgAutoStart').checked;
+    await window.hrms.setAutoStart(v);
+    logLine('Auto-start ' + (v ? 'enabled' : 'disabled'));
+}
+
+async function toggleAutoTrack() {
+    const v = document.getElementById('tgAutoTrack').checked;
+    await window.hrms.saveConfig({ autoTrack: v });
+    logLine('Auto-resume tracking ' + (v ? 'enabled' : 'disabled'));
+}
+
+window.hrms.onStatusUpdate((s) => paintStatus(s));
+bootstrap();
+</script>
+</body>
+</html>

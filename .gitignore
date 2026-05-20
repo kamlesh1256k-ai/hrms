@@ -1,0 +1,79 @@
+## Editors
+/.idea
+/.vscode
+/.fleet
+/.nova
+/.zed
+
+## Dependencies
+/node_modules
+/vendor
+**/node_modules
+
+## Laravel runtime
+/public/hot
+/public/storage
+/storage/*.key
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+/bootstrap/cache/*
+!/bootstrap/cache/.gitignore
+!/storage/framework/cache/.gitignore
+!/storage/framework/sessions/.gitignore
+!/storage/framework/views/.gitignore
+!/storage/logs/.gitignore
+
+## Env / secrets
+.env
+.env.*
+!.env.example
+auth.json
+Homestead.json
+Homestead.yaml
+
+## Misc
+.phpunit.result.cache
+npm-debug.log
+yarn-error.log
+*.log
+Thumbs.db
+.DS_Store
+
+## ─── Big binaries / build outputs (NEVER push) ───
+*.exe
+*.dll
+*.msi
+*.dmg
+*.pkg
+*.zip
+*.rar
+*.7z
+*.tar
+*.tar.gz
+*.tgz
+*.iso
+*.asar
+*.exe.blockmap
+*.AppImage
+
+## Backups
+/1
+/backup
+/backups
+
+## Activity-tracker build outputs (Electron)
+/Modules/activity-tracker/node-agent/dist
+/Modules/activity-tracker/node-agent/dist-*
+/Modules/activity-tracker/node-agent/release
+/Modules/activity-tracker/node-agent/out
+/Modules/activity-tracker/node-agent/build
+/Modules/activity-tracker/node-agent/node_modules
+/Modules/activity-tracker/*.zip
+/Modules/activity-tracker/*.exe
+
+## Uploads (user content — don't push to git)
+/storage/app/public/uploads
+/public/uploads
+/public/storage/uploads

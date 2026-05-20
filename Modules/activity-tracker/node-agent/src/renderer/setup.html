@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HRMS Activity Tracker</title>
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+        background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 60%, #312e81 100%);
+        min-height: 100vh; display: flex; align-items: center; justify-content: center;
+        color: #1f2937; padding: 20px;
+    }
+    .card {
+        background: #fff; border-radius: 18px;
+        padding: 36px 38px; max-width: 420px; width: 100%;
+        box-shadow: 0 30px 80px -10px rgba(0,0,0,.5);
+    }
+    .logo {
+        width: 64px; height: 64px; border-radius: 16px;
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        display: flex; align-items: center; justify-content: center;
+        font-weight: 700; font-size: 1.4rem; color: #fff;
+        margin: 0 auto 18px;
+        box-shadow: 0 14px 30px -10px rgba(99,102,241,.55);
+    }
+    h2 { text-align: center; font-size: 1.3rem; font-weight: 700; margin-bottom: 4px; color: #0f172a; }
+    .sub { text-align: center; font-size: .85rem; color: #64748b; margin-bottom: 26px; }
+    .field { margin-bottom: 16px; }
+    label { display: block; font-size: .82rem; font-weight: 600; color: #334155; margin-bottom: 6px; }
+    input {
+        width: 100%; border: 1.5px solid #e2e8f0; border-radius: 10px;
+        padding: 12px 14px; font-size: .9rem; font-family: inherit; background: #f8fafc;
+    }
+    input:focus { outline: 0; border-color: #6366f1; background: #fff; box-shadow: 0 0 0 4px rgba(99,102,241,.15); }
+    .btn {
+        width: 100%; background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        color: #fff; border: 0; padding: 13px 20px; border-radius: 10px;
+        font-weight: 700; font-size: .95rem; cursor: pointer; margin-top: 8px;
+        box-shadow: 0 12px 28px -10px rgba(99,102,241,.55);
+        transition: opacity .2s;
+    }
+    .btn:disabled { opacity: .55; cursor: not-allowed; }
+    .alert { padding: 10px 14px; border-radius: 8px; margin-top: 14px; font-size: .82rem; display: none; }
+    .alert.error   { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; display: block; }
+    .alert.success { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; display: block; }
+    .server-tag {
+        text-align: center; font-size: .75rem; color: #94a3b8; margin-bottom: 20px;
+    }
+    .server-tag span { color: #6366f1; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="card">
+    <div class="logo">HR</div>
+    <h2>HRMS Activity Tracker</h2>
+    <p class="sub">Apni company email aur password se login karein</p>
+    <div class="server-tag">Server: <span>jemini.co.in</span></div>
+
+    <div class="field">
+        <label>Email Address</label>
+        <input type="email" id="emailInput" placeholder="aapki@email.com" autocomplete="email" autofocus>
+    </div>
+    <div class="field">
+        <label>Password</label>
+        <input type="password" id="passInput" placeholder="••••••••" autocomplete="current-password">
+    </div>
+
+    <button class="btn" id="btnLogin" onclick="doLogin()">Login &amp; Start Tracking</button>
+    <div class="alert" id="alertBox"></div>
+</div>
+
+<script>
+const SERVER_URL = 'https://jemini.co.in/api';
+
+async function doLogin() {
+    const email    = document.getElementById('emailInput').value.trim();
+    const password = document.getElementById('passInput').value;
+    const btn      = document.getElementById('btnLogin');
+
+    if (!email || !password) { showMsg('Email aur password dono zaroori hain.', 'error'); return; }
+
+    btn.disabled = true;
+    btn.textContent = 'Connecting…';
+    clearMsg();
+
+    try {
+        // Pehle server URL save karo
+        await window.hrms.stealthSaveServer({ apiUrl: SERVER_URL });
+
+        // Ab login karo
+        const r = await window.hrms.login({ apiUrl: SERVER_URL, email, password });
+
+        if (r && r.ok) {
+            showMsg('Login ho gaya! Tracking shuru ho rahi hai…', 'success');
+            btn.textContent = 'Starting…';
+            setTimeout(() => { window.location.href = SERVER_URL.replace('/api', '/login'); }, 1500);
+        } else {
+            showMsg(r.message || 'Login fail hua. Email/password check karein.', 'error');
+            btn.disabled = false;
+            btn.textContent = 'Login & Start Tracking';
+        }
+    } catch (e) {
+        showMsg(e.message || 'Network error. Internet connection check karein.', 'error');
+        btn.disabled = false;
+        btn.textContent = 'Login & Start Tracking';
+    }
+}
+
+function showMsg(msg, type) {
+    const a = document.getElementById('alertBox');
+    a.textContent = msg;
+    a.className = 'alert ' + type;
+}
+function clearMsg() {
+    const a = document.getElementById('alertBox');
+    a.className = 'alert';
+    a.textContent = '';
+}
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') doLogin();
+});
+</script>
+</body>
+</html>

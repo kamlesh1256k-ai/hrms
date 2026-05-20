@@ -1,0 +1,63 @@
+{
+  "name": "jemini-activity-tracker",
+  "version": "2.1.0",
+  "description": "Jemini HR Activity Tracker - Employee Monitoring",
+  "main": "src/main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --enable-logging",
+    "build": "electron-builder --win"
+  },
+  "author": "Miraix HR Solutions",
+  "license": "Proprietary",
+  "dependencies": {
+    "active-win": "^8.2.1",
+    "axios": "^1.6.7",
+    "electron-store": "^8.2.0",
+    "form-data": "^4.0.0",
+    "node-machine-id": "^1.1.12",
+    "screenshot-desktop": "^1.15.4",
+    "sql.js": "^1.10.3"
+  },
+  "devDependencies": {
+    "electron": "^27.3.11",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "co.in.jemini.activity-tracker",
+    "productName": "Jemini Activity Tracker",
+    "npmRebuild": false,
+    "directories": {
+      "output": "dist-jemini-2.1.0"
+    },
+    "files": [
+      "src/**/*",
+      "package.json",
+      "node_modules/**/*",
+      "!dist/**",
+      "!dist-*/**",
+      "!**/*.zip",
+      "!tmp-*/**",
+      "!*.bat",
+      "!*.md"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "assets/icon.ico",
+      "signAndEditExecutable": false,
+      "verifyUpdateCodeSignature": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "include": "installer.nsh",
+      "runAfterFinish": false
+    }
+  }
+}

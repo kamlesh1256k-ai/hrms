@@ -1,0 +1,16 @@
+/* Notification Sounds - Default notification tones */
+if (typeof notificationSound1 === 'undefined') {
+
+// Notification sound - modern beep
+var notificationSound1 = new Audio('data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAAEAAAESAAzMzMzMzMzMzMzMzMzMzMzMzMzZmZmZmZmZmZmZmZmZmZmZmZmZmZpmZmZmZmZmZmZmZmZmZmZmZmZmZv////////////////////////////////8AAAAATGF2YzU4LjU0AAAAAAAAAAAAAAAAJAAAAAAAAAAAAEgAAAAAAAAAAAAAAAAAAAAAAAD/+xDEAAAGvAJKgBAAILeDSVACAARpxxyy5uKy5uKzZyqtb5kKjlZzU4qLlZs5WqrtZc1Oc5Wq1Vqq7WXNTlastVarVWqtVWq1Vqq1WqtVarVVqtf/+xDECoAGCAJI4EuaIKiAyNQKaMrVWqtVar//rVWqtVWq1X/6q1Vqq1Vqq1VWqtVWqtVWqtVWqtVWqtVWqtVWqrVWqq1Vqq1VWqr/+xDEFAAABpQAAAACAAANIAAAAEVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtf/+xDEKwAABpQAAAACAAANIAAAAEVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtVWqtf/7EMQbAAAGlAAAAACAAA0gAAABBVarVVqrVVqrVVqrVVqrVVqrVVqrVVqrVVqrVVqrVVqrVVqrVVqrVVqrVVqrVVqrVVqrVVqrVVqrVVqr');
+notificationSound1.volume = 0.6;
+
+// Notification bell sound
+var notificationSound2 = new Audio('data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAAFAAAFhgBVVVVVVVVVVVVVVVVVVVVVVVWqqqqqqqqqqqqqqqqqqqqqqqqqqqr///////////////////////////////////8AAAAATGF2YzU4LjU0gAAAAAAAAAAAAAAAAJAAAAAAAAAAAAWGqBbtcQAAAAAA//uQxAAACGhVKn2UAAD7CyVPsoAA8cnxznPePPfc88+ec8885555zzznnnOs655zzznnnnnVc55zzznnnnnnnnnnnnnPOc655zzznPOec5555555555z/+xDEDgPxhzjT7MQAAmBnmn2YgADnnPPOec855zzznnnnnnnOeec5555znnnnOec855zzznnnnnnnnnnnOec85zznnnOec855555zznnOec855zzn/+xDEIoPwAzjT7MQAAmCnmn2YgADnnPOec855zzznnnnnnnnnnnOeec855555555zzznnnnnnnnnnnnnnnOec5555zznnOec855555555zznnOec555zn/+xDEPoPxgzjT7MQAAmBnmn2YgADnnnnPOec855555zzznnnnnnnnnnnOec855zznnnOec855zzznnnnnnnnnnnOeec5555zznnPOec8555555zznnOeec855z');
+notificationSound2.volume = 0.7;
+
+// Success chime
+var notificationSound3 = new Audio('data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAAFAAAFgAAgICAgICAgICAgICAgICAgICAgQEBAQEBAQEBAQEBAQEBAQEBAQGBgYGBgYGBgYGBgYGBgYGBgYGCAgICAgICAgICAgICAgICAgICA//////////////////////////8AAAAATGF2YzU4LjU0gAAAAAAAAAAAAAAAAJAAAAAAAAAAAAWAYcaJkQAAAAAA//uQxAAACGAJJH2UAADzCSVPsoAAMlSlSUhVSlSpaKhVSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSr/+xDEDwPxzRjT7MQAAmEnmn2YgAClSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSr/+xDEIgPw9RjT7MQAAmDnmn2YgAClSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSr/+xDEOgPxlRjT7MQAAmCnmn2YgAClSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSlSr');
+notificationSound3.volume = 0.5;
+
+}

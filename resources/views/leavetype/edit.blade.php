@@ -1,0 +1,134 @@
+{{ Form::model($leavetype, ['route' => ['leavetype.update', $leavetype->id], 'method' => 'PUT', 'class' => 'needs-validation', 'novalidate', 'data-addr-country' => $leavetype->country ?? '', 'data-addr-state' => $leavetype->state ?? '', 'data-addr-city' => $leavetype->city ?? '']) }}
+<div class="modal-body">
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="form-group">
+                {{ Form::label('title', __('Name'), ['class' => 'form-label']) }}
+                <div class="form-icon-user">
+                    {{ Form::text('title', null, ['class' => 'form-control', 'required'=>'required', 'placeholder' => __('Enter Leave Type Name')]) }}
+                </div>
+                @error('title')
+                    <span class="invalid-name" role="alert">
+                        <strong class="text-danger">{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+        </div>
+
+
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="form-group">
+                {{ Form::label('days', __('Days Per Year'), ['class' => 'form-label']) }}
+                <div class="form-icon-user">
+                    {{ Form::number('days', null, ['class' => 'form-control', 'id' => 'days', 'placeholder' => __('Enter Days / Year'), 'min' => '0', 'step' => '0.01']) }}
+                </div>
+               
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="form-group">
+                {{ Form::label('monthly_credit', __('Monthly Credit'), ['class' => 'form-label']) }}
+                <div class="form-icon-user">
+                    {{ Form::number('monthly_credit', null, ['class' => 'form-control', 'id' => 'monthly_credit', 'placeholder' => __('Enter Monthly Credit'), 'min' => '0', 'step' => '0.01']) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="form-group">
+                {{ Form::label('annual_credit', __('Annual Credit'), ['class' => 'form-label']) }}
+                <div class="form-icon-user">
+                    {{ Form::number('annual_credit', null, ['class' => 'form-control', 'id' => 'annual_credit', 'placeholder' => __('Enter Annual Credit'), 'min' => '0', 'step' => '0.01']) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="form-group">
+                {{ Form::label('approval_requirement', __('Approval Requirement'), ['class' => 'form-label']) }}
+                {{ Form::select('approval_requirement', ['subordinate' => __('Subordinate Approval'), 'na' => __('NA')], $leavetype->approval_requirement ?? 'na', ['class' => 'form-control']) }}
+            </div>
+        </div>
+        <div class="col-md-4"><div class="form-group"><label class="form-label">{{ __('Country') }}</label><select name="country" class="form-control addr-country"><option value="">{{ __('Select Country') }}</option></select></div></div>
+        <div class="col-md-4"><div class="form-group"><label class="form-label">{{ __('State') }}</label><select name="state" class="form-control addr-state"><option value="">{{ __('Select State') }}</option></select></div></div>
+        <div class="col-md-4"><div class="form-group"><label class="form-label">{{ __('City') }}</label><select name="city" class="form-control addr-city"><option value="">{{ __('Select City') }}</option></select></div></div>
+    </div>
+</div>
+<div class="modal-footer">
+    <input type="button" value="Cancel" class="btn btn-light" data-bs-dismiss="modal">
+    <input type="submit" value="{{ __('Update') }}" class="btn btn-primary">
+</div>
+{{ Form::close() }}
+
+<script>
+    (function() {
+        var isSyncing = false;
+
+        function toNumber(value) {
+            var parsed = parseFloat(value);
+            return Number.isFinite(parsed) ? parsed : null;
+        }
+
+        function toFixedTwo(value) {
+            return (Math.round(value * 100) / 100).toFixed(2);
+        }
+
+        function setIfChanged(input, value) {
+            if (!input) return;
+            if (String(input.value) !== String(value)) {
+                input.value = value;
+            }
+        }
+
+        function syncFromDays(daysInput, monthlyInput, annualInput) {
+            var days = toNumber(daysInput.value);
+            if (days === null) return;
+
+            setIfChanged(annualInput, toFixedTwo(days));
+            setIfChanged(monthlyInput, toFixedTwo(days / 12));
+        }
+
+        function syncFromAnnual(daysInput, monthlyInput, annualInput) {
+            var annual = toNumber(annualInput.value);
+            if (annual === null) return;
+
+            setIfChanged(daysInput, toFixedTwo(annual));
+            setIfChanged(monthlyInput, toFixedTwo(annual / 12));
+        }
+
+        function syncFromMonthly(daysInput, monthlyInput, annualInput) {
+            var monthly = toNumber(monthlyInput.value);
+            if (monthly === null) return;
+
+            var annual = monthly * 12;
+            setIfChanged(annualInput, toFixedTwo(annual));
+            setIfChanged(daysInput, toFixedTwo(annual));
+        }
+
+        $(document).on('input change', '#days, #annual_credit, #monthly_credit', function() {
+            if (isSyncing) return;
+
+            var daysInput = document.getElementById('days');
+            var monthlyInput = document.getElementById('monthly_credit');
+            var annualInput = document.getElementById('annual_credit');
+
+            if (!daysInput || !monthlyInput || !annualInput) return;
+
+            isSyncing = true;
+            if (this.id === 'days') {
+                syncFromDays(daysInput, monthlyInput, annualInput);
+            } else if (this.id === 'annual_credit') {
+                syncFromAnnual(daysInput, monthlyInput, annualInput);
+            } else if (this.id === 'monthly_credit') {
+                syncFromMonthly(daysInput, monthlyInput, annualInput);
+            }
+            isSyncing = false;
+        });
+    })();
+</script>
+
+
+
+

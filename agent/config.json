@@ -1,0 +1,11 @@
+{
+    "api_url": "http://localhost/hrms/api",
+    "token": "",
+    "interval": 300,
+    "idle_threshold": 60,
+    "screenshot_quality": 60,
+    "screenshot_max_width": 1600,
+    "keep_local_screenshots": false,
+    "verify_ssl": true,
+    "device_name": ""
+}
